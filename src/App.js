@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import { getPost } from './jsonData';
 import './App.css';
+import { useEffect, useState } from 'react';
+import Card from './card';
 
 function App() {
+  const [data,setData]= useState()
+  useEffect(()=>{
+    getPost().then((posts)=>
+      setData(posts.results[0])
+    ) 
+  },[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        data ? <Card data={data}/>:<p>No data</p>
+      }
+      
+     {/* {
+      data? <div>
+        {
+          data.map((val,key)=>(
+            <Card key={key} name={val.name} address={val.address} />
+          ))
+        }
+      </div> 
+      :
+       <p>
+        No data
+      </p>
+     } */}
     </div>
   );
 }
